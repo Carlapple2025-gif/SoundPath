@@ -15,8 +15,11 @@ APP_NAME="声路"
 APP_PATH="dist/${APP_NAME}.app"
 VERSION="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Resources/Info.plist)"
 BUILD_NUMBER="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' Resources/Info.plist)"
-TAG="v${VERSION}"
-ARCHIVE="dist/SoundPath-${VERSION}-universal.zip"
+# Info.plist 里可能写 1.0，而 tag/附件统一用三段式 1.0.0。
+IFS=. read -r VERSION_MAJOR VERSION_MINOR VERSION_PATCH <<<"$VERSION"
+SEMVER="${VERSION_MAJOR}.${VERSION_MINOR:-0}.${VERSION_PATCH:-0}"
+TAG="v${SEMVER}"
+ARCHIVE="dist/SoundPath-${SEMVER}-universal.zip"
 
 UPLOAD=0
 if [[ "${1:-}" == "--upload" ]]; then
