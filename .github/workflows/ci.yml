@@ -19,7 +19,7 @@ jobs:
     name: build
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: 工具链信息
         run: |
