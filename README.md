@@ -1,5 +1,7 @@
 # 声路（SoundPath）
 
+[![CI](https://github.com/Carlapple2025-gif/SoundPath/actions/workflows/ci.yml/badge.svg)](https://github.com/Carlapple2025-gif/SoundPath/actions/workflows/ci.yml)
+
 一个常驻 macOS 菜单栏的小工具：**给不同 App 指定不同的声音输出设备**。
 
 比如：Chrome 走「外置耳筒」，系统默认走 AirPlay（HomePod mini），互不打扰。
@@ -164,6 +166,11 @@ Resources/AppIcon.icns         图标
 build.sh / install.sh          构建 / 安装
 tools/make_icon.swift          图标生成脚本
 ```
+
+## 更新日志与许可证
+
+- 更新日志：[CHANGELOG.md](CHANGELOG.md)
+- 许可证：[MIT](LICENSE)（Copyright © 2026 Carlapple2025-gif）
 
 ## 卸载
 

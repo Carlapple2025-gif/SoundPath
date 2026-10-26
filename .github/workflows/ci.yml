@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: build
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 工具链信息
+        run: |
+          sw_vers
+          swift --version
+          xcode-select -p
+
+      - name: 构建 App
+        run: bash build.sh
+
+      - name: 自测转发增益（无需录音权限）
+        run: ./dist/声路.app/Contents/MacOS/SoundPath --mixer-test
