@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# SwiftPM / swiftc 构建产物
+.build/
+.build-cache/
+.swiftpm/
+*.o
+*.dSYM/
+*.dSYM.zip
+
+# 打出来的 App（用 build.sh 重新生成，不入库）
+dist/
+*.app
+
+# Xcode 本地状态
+DerivedData/
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
