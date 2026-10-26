@@ -3,7 +3,13 @@
 格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
-## [未发布]
+## [1.0.1] - 2026-10-26
+
+### 修复
+
+- 接管 App 后原声仍可能从原输出播放（尤其默认输出是 AirPlay / HomePod 时，会出现两边同时响）：
+  Tap 静音模式从 `.mutedWhenTapped` 改为 `.muted`，接管期间强制静音源进程
+- macOS 26+ 启用 `processRestoreEnabled`：Chrome / Safari 的 helper 进程重启后仍会被 Tap 覆盖
 
 ### 新增
 
@@ -30,4 +36,5 @@
 - 仅支持 macOS 14.4 及以上（依赖 Core Audio Process Tap）
 - AirPlay 不能作为单个 App 的目标输出（macOS 限制）
 
+[1.0.1]: https://github.com/Carlapple2025-gif/SoundPath/releases/tag/v1.0.1
 [1.0.0]: https://github.com/Carlapple2025-gif/SoundPath/releases/tag/v1.0.0

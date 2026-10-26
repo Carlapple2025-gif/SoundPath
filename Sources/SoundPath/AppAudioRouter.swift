@@ -59,8 +59,22 @@ final class AppAudioRouter {
             let description = CATapDescription(stereoMixdownOfProcesses: processObjectIDs)
             description.uuid = UUID()
             description.name = "SoundPath-\(appName)"
-            description.muteBehavior = .mutedWhenTapped
+            // `.mutedWhenTapped` depends on the HAL noticing that the tap is
+            // being read; with a private aggregate the source sometimes keeps
+            // playing (e.g. straight to AirPlay). `.muted` silences the source
+            // for as long as the tap exists, which is exactly the lifetime of
+            // this route.
+            description.muteBehavior = .muted
             description.isPrivate = true
+            if #available(macOS 26.0, *) {
+                // Chrome/Safari play through helper processes that can be
+                // replaced while a route is alive; ask the HAL to restore them
+                // by bundle ID instead of losing the tap.
+                description.isProcessRestoreEnabled = true
+            }
+            if ProcessInfo.processInfo.arguments.contains("--route-test") {
+                print("tap: processes=\(processObjectIDs.count) mute=\(description.muteBehavior.rawValue) private=\(description.isPrivate)")
+            }
 
             var tap = AudioObjectID(kAudioObjectUnknown)
             try caCheck(AudioHardwareCreateProcessTap(description, &tap), "创建音频 Tap 失败")
