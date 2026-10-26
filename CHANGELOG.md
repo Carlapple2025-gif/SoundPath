@@ -3,6 +3,15 @@
 格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [未发布]
+
+### 新增
+
+- `SOUNDPATH_UNIVERSAL=1` 构建 arm64 + x86_64 通用二进制
+- `release.sh`：Developer ID 签名、公证、装订票据、可选上传 Release
+- `docs/RELEASING.md`：Apple Developer 报名与发版完整步骤
+- CI 改为构建通用二进制，提前发现跨架构问题
+
 ## [1.0.0] - 2026-10-26
 
 首个公开版本。

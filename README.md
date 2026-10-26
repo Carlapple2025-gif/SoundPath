@@ -55,6 +55,12 @@ bash build.sh
 open "dist/声路.app"
 ```
 
+打通用二进制（Apple Silicon + Intel 都能跑）：
+
+```bash
+SOUNDPATH_UNIVERSAL=1 bash build.sh
+```
+
 菜单栏右上角会出现「声路」图标（两个小音箱）。
 
 想放到「应用程序」里方便以后打开：
@@ -64,6 +70,17 @@ bash install.sh
 ```
 
 它会构建（如果还没构建）、复制到 `~/Applications/声路.app` 并启动。
+
+### 正式分发（签名 + 公证）
+
+自己编译出来的 App 是 ad-hoc 签名，**别人下载会被 Gatekeeper 拦**。正式发给别人需要 Apple Developer Program：
+
+1. 按 [docs/RELEASING.md](docs/RELEASING.md) 报名、装 Developer ID 证书、存好公证凭据；
+2. 改 `Info.plist` 版本并更新 `CHANGELOG.md`；
+3. `SOUNDPATH_NOTARY_PROFILE=soundpath-notary bash release.sh` —— 自动出 universal 包、签名、公证、staple；
+4. `bash release.sh --upload` 传到对应的 GitHub Release。
+
+没有证书时 `release.sh` 会直接提示，不会产出半成品。
 
 ## 第一次使用
 
@@ -161,6 +178,8 @@ Sources/SoundPath/
   AppAudioRouter.swift         Tap + 聚合设备 + 实时转发（含每路软件增益）
   TestTonePlayer.swift         设备试听音
   CoreAudioSupport.swift       Core Audio 封装（含每设备音量读写）
+release.sh                     正式发版：通用包 + 签名 + 公证
+docs/RELEASING.md              Apple Developer / 公证 / 发版步骤
 Resources/Info.plist           LSUIElement、音频捕获权限说明
 Resources/AppIcon.icns         图标
 build.sh / install.sh          构建 / 安装

@@ -27,8 +27,16 @@ jobs:
           swift --version
           xcode-select -p
 
-      - name: 构建 App
+      - name: 构建 App（通用二进制）
+        env:
+          SOUNDPATH_UNIVERSAL: "1"
         run: bash build.sh
+
+      - name: 校验架构
+        run: |
+          archs="$(lipo -archs dist/声路.app/Contents/MacOS/SoundPath)"
+          echo "$archs"
+          [[ "$archs" == *arm64* && "$archs" == *x86_64* ]]
 
       - name: 自测转发增益（无需录音权限）
         run: ./dist/声路.app/Contents/MacOS/SoundPath --mixer-test
