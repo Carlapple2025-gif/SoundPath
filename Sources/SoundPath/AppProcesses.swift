@@ -53,6 +53,24 @@ enum AudioProcessScanner {
                                               kAudioProcessPropertyIsRunningOutput,
                                               defaultValue: UInt32(0))) ?? 0) == 1
 
+            // Quick Look and friends are services, not regular apps. Include
+            // them explicitly so the audio they play can be routed too.
+            if let service = systemService(for: bundleID) {
+                let family = "system:\(service.bundleID.lowercased())"
+                var bucket = buckets[family] ?? (
+                    name: service.name,
+                    bundleID: service.bundleID,
+                    ids: [],
+                    playing: false,
+                    icon: NSImage(systemSymbolName: service.symbolName,
+                                  accessibilityDescription: service.name)
+                )
+                if !bucket.ids.contains(objectID) { bucket.ids.append(objectID) }
+                bucket.playing = bucket.playing || playing
+                buckets[family] = bucket
+                continue
+            }
+
             var family = "pid:\(pid)"
             var application: NSRunningApplication?
 
@@ -104,6 +122,27 @@ enum AudioProcessScanner {
         .sorted { lhs, rhs in
             if lhs.isPlaying != rhs.isPlaying { return lhs.isPlaying }
             return lhs.name.localizedStandardCompare(rhs.name) == .orderedAscending
+        }
+    }
+
+    /// Audio-capable system services that never appear as regular apps.
+    private struct SystemAudioService {
+        let bundleID: String
+        let name: String
+        let symbolName: String
+    }
+
+    private static let systemServices: [SystemAudioService] = [
+        // 空格预览（Finder）的视频/音频是由这个服务播的，默认跟随系统输出。
+        SystemAudioService(bundleID: "com.apple.quicklook.QuickLookUIService",
+                           name: "快速预览（空格）",
+                           symbolName: "eye.circle")
+    ]
+
+    private static func systemService(for bundleID: String) -> SystemAudioService? {
+        guard !bundleID.isEmpty else { return nil }
+        return systemServices.first {
+            $0.bundleID.caseInsensitiveCompare(bundleID) == .orderedSame
         }
     }
 

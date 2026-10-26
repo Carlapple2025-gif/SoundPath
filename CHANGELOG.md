@@ -3,6 +3,13 @@
 格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [1.0.2] - 2026-10-26
+
+### 新增
+
+- 支持接管 Finder 空格预览的音频：`QuickLookUIService` 以「快速预览（空格）」出现在「应用声音」中，可单独指定输出设备
+- README 补充空格预览场景与 FAQ
+
 ## [1.0.1] - 2026-10-26
 
 ### 修复
@@ -36,5 +43,6 @@
 - 仅支持 macOS 14.4 及以上（依赖 Core Audio Process Tap）
 - AirPlay 不能作为单个 App 的目标输出（macOS 限制）
 
+[1.0.2]: https://github.com/Carlapple2025-gif/SoundPath/releases/tag/v1.0.2
 [1.0.1]: https://github.com/Carlapple2025-gif/SoundPath/releases/tag/v1.0.1
 [1.0.0]: https://github.com/Carlapple2025-gif/SoundPath/releases/tag/v1.0.0
