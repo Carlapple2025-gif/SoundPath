@@ -50,7 +50,8 @@
 在「终端」里执行：
 
 ```bash
-cd ~/dev/proj-swift/SoundPath
+git clone https://github.com/Carlapple2025-gif/SoundPath.git
+cd SoundPath
 bash build.sh
 open "dist/声路.app"
 ```
@@ -165,7 +166,7 @@ AirPlay 设备只在有活动连接时出现在系统里。先在**控制中心 
 
 ## 文件结构
 
-项目位于 `~/dev/proj-swift/SoundPath/`，与其他 Swift 项目并列。
+仓库根目录结构：
 
 ```
 Package.swift                  SwiftPM 工程
